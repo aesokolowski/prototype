@@ -42,3 +42,6 @@ node/
 
 ### In case I pull it to the Mac ###
 .DS_Store
+
+## Webpack output  ##
+src/main/resources/static/built/
