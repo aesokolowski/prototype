@@ -6,4 +6,46 @@ a, a:hover, a:visited, a:link {
 body {
     background-color: #444444;
     color: #BBBBBB;
+    font-family: 'Roboto Mono', monospace;
+}
+
+article {
+    border-top: 2px solid #000000;
+    border-bottom: 2px solid #000000;
+}
+
+footer {
+    background-color: #333333;
+    border-top: 2px solid #000000;
+}
+
+footer h5 {
+    margin-left: 10px;
+    padding-bottom: 2px;
+}
+
+header {
+    background-color: #333333;
+    border-bottom: 2px solid #000000;
+    padding: 4px 0px;
+}
+
+.body-container {
+    margin-left: 10px;
+}
+
+.nav-container {
+    align-items: baseline;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.nav-element {
+    border-right: 1px solid #444444;
+    padding-right: 10px;
+    margin-left: 10px;
+}
+
+.nav-element:last-child {
+    border-right: none;
 }
