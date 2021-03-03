@@ -3,7 +3,11 @@ import ReactDOM from 'react-dom';
 
 import TicTacToe from './tictactoe/TicTacToe';
 
+import { generateIds } from './code/tttHelpers';
+
+const ids = generateIds();
+
 ReactDOM.render(
-    <TicTacToe />,
+    <TicTacToe ids={ids} />,
     document.getElementById('tictactoe')
 );

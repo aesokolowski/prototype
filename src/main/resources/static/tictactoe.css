@@ -1,0 +1,47 @@
+table {
+    border-collapse: collapse;
+}
+
+.ttt-celement {
+    border: 4px solid #222222;
+    font-size: 72px;
+    height: 100px;
+    width: 100px;
+    text-align: center;
+}
+
+.ttt-celement#ttt-cell00 {
+    border-top: none;
+    border-left: none;
+}
+
+.ttt-celement#ttt-cell01 {
+    border-top: none;
+}
+
+.ttt-celement#ttt-cell02 {
+    border-top: none;
+    border-right: none;
+}
+
+.ttt-celement#ttt-cell10 {
+    border-left: none;
+}
+
+.ttt-celement#ttt-cell12 {
+    border-right: none;
+}
+
+.ttt-celement#ttt-cell20 {
+    border-bottom: none;
+    border-left: none;
+}
+
+.ttt-celement#ttt-cell21 {
+    border-bottom: none;
+}
+
+.ttt-celement#ttt-cell22 {
+    border-right: none;
+    border-bottom: none;
+}

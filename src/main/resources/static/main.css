@@ -3,15 +3,17 @@ a, a:hover, a:visited, a:link {
     text-decoration: none;
 }
 
+article {
+    border-top: 2px solid #000000;
+    border-bottom: 2px solid #000000;
+    margin-left: 10px;
+    padding-bottom: 20px;
+}
+
 body {
     background-color: #444444;
     color: #BBBBBB;
     font-family: 'Roboto Mono', monospace;
-}
-
-article {
-    border-top: 2px solid #000000;
-    border-bottom: 2px solid #000000;
 }
 
 footer {
@@ -21,7 +23,7 @@ footer {
 
 footer h5 {
     margin-left: 10px;
-    padding-bottom: 2px;
+    padding-bottom: 10px;
 }
 
 header {

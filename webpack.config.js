@@ -24,7 +24,9 @@ const config = {
                 test: path.join(__dirname, '.'),
                 exclude: [
                     /node_modules/,
-                    /node/
+                    /node/,
+                    /target/,
+                    /built/
                 ],
                 use: [{
                     loader: 'babel-loader',
