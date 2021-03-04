@@ -5,6 +5,7 @@ type TicTacColProps = {
     currentTurn: 'X' | 'O',
     changeTurn: (string) => void
 };
+// any state changes which would affect only a boolean cell
 type TicTacColState = { isPlayed: boolean };
 
 interface TicTacCol {
@@ -28,6 +29,7 @@ class TicTacCol extends React.Component<TicTacColProps,
         e.preventDefault();
         e.stopPropagation();
 
+        // only permit a space to be played if it hasn't been already
         if (!this.state.isPlayed) {
             this.space.current.innerText = this.props.currentTurn;
             this.props.changeTurn(this.space.current.id);

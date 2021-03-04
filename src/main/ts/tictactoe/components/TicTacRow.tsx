@@ -8,6 +8,8 @@ type TicTacRowProps = {
     changeTurn: (string) => void
 };
 
+//  This component is functional because it's merely mapping the table row
+//  to columns and fowarding its props to the actual cells
 const TicTacRow: React.FunctionComponent<TicTacRowProps> =
         ({ children, idRow, currentTurn, changeTurn }) => (
     <tr>{
