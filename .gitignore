@@ -45,3 +45,6 @@ node/
 
 ## Webpack output  ##
 src/main/resources/static/built/
+
+## Transpiled TypeScript for testing ##
+src/test/ts/transpiled/

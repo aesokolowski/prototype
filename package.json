@@ -17,7 +17,7 @@
         "react-dom": "^17.0.1"
     },
     "scripts": {
-        "test": "mocha ./src/test/ts/*.ts",
+        "test": "mocha ./src/test/ts/transpiled/*.js",
         "watch-dev": "cross-env NODE_ENV=development webpack -w -d -o ./target/classes/static/built/bundle.js",
         "build": "cross-env NODE_ENV=production webpack -d -o ./target/classes/static/built/bundle.js"
     },
