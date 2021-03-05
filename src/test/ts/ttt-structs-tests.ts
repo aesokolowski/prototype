@@ -1,9 +1,13 @@
 const { expect } = require('chai');
+const chai = require('chai');
+const assertType = require('chai-asserttype');
 const { xWinConditions, oWinConditions } = require('./test_files/test_tttStructs');
 
 const simpleTestPatterns = [
         '---------', 'XXX-O--O-', '-XX-XOO--', 'OX--OXXXO'
 ];
+
+chai.use(assertType);
 
 describe('xWinCondtions and oWinConditions:', () => {
     describe('do they pass simple tests?:', () => {
@@ -17,19 +21,19 @@ describe('xWinCondtions and oWinConditions:', () => {
         console.log('-----');
         console.log(' | | ');
 
-        it('first pattern fails first conditon of each:', () => {
+        it('first pattern fails first conditon of each', () => {
             const pattern = simpleTestPatterns[0];
 
             expect(xCondition.test(pattern)).to.equal(false);
             expect(oCondition.test(pattern)).to.equal(false);
         });
-        it('second pattern passes first condition of X but not O:', () => {
+        it('second pattern passes first condition of X but not O', () => {
             const pattern = simpleTestPatterns[1];
 
             expect(xCondition.test(pattern)).to.equal(true);
             expect(oCondition.test(pattern)).to.equal(false);
         });
-        it('third pattern fails both conditions:', () => {
+        it('third pattern fails both conditions', () => {
             const pattern = simpleTestPatterns[2];
 
             expect(xCondition.test(pattern)).to.equal(false);
@@ -48,7 +52,7 @@ describe('xWinCondtions and oWinConditions:', () => {
         console.log('-----');
         console.log(' | |X');
 
-        it('fourth pattern passes O but not X:', () => {
+        it('fourth pattern passes O but not X', () => {
             const pattern = simpleTestPatterns[3];
 
             expect(xCondition.test(pattern)).to.equal(false);
@@ -56,7 +60,7 @@ describe('xWinCondtions and oWinConditions:', () => {
         });
     });
 
-    describe('all conditions against series of patterns:', () => {
+    describe('all conditions against series of patterns', () => {
         const patterns = [ // comments note which condititon pair should get
                            // satisfied
             // condition 0            // condition 3
@@ -66,5 +70,57 @@ describe('xWinCondtions and oWinConditions:', () => {
         ];
 
         console.log('patterns:', patterns);
+        it ('ensure both condition arrays are Arrays and of the same length',
+                () => {
+            expect(xWinConditions).to.be.an.array();
+            expect(xWinConditions.length).to.equal(oWinConditions.length);
+        });
+        it ('ensure individually that both condition arrays are of length 8',
+                () => {
+            expect(xWinConditions.length).to.equal(8);
+            expect(oWinConditions.length).to.equal(8);
+        })
+        it('first 8 patterns', () => {
+            for (let i = 0; i < xWinConditions.length; i++) {
+                const xCondition: RegExp = xWinConditions[i];
+                const oCondition: RegExp = oWinConditions[i];
+
+                for (let j = 0; j < 8; j++) {
+                    const pattern = patterns[j];
+                    const xResult = xCondition.test(pattern);
+                    const oResult = oCondition.test(pattern);
+
+                    // assume false, just code the branches with a true
+                    if (i === 0 && j === 0) {
+                        expect(xResult).to.equal(true);
+                        expect(oResult).to.equal(false);
+                    } else if (i === 0 && j === 1) {
+                        expect(xResult).to.equal(false);
+                        expect(oResult).to.equal(true);
+                    } else if (i === 1 && j === 4) {
+                        expect(xResult).to.equal(true);
+                        expect(oResult).to.equal(false);
+                    } else if (i === 1 && j === 5) {
+                        expect(xResult).to.equal(false);
+                        expect(oResult).to.equal(true);
+                    } else if (i === 2 && j === 6) {
+                        expect(xResult).to.equal(true);
+                        expect(oResult).to.equal(false);
+                    } else if (i === 2 && j === 7) {
+                        expect(xResult).to.equal(false);
+                        expect(oResult).to.equal(true);
+                    } else if (i === 3 && j === 2) {
+                        expect(xResult).to.equal(true);
+                        expect(oResult).to.equal(false);
+                    } else if (i === 3 && j === 3) {
+                        expect(xResult).to.equal(false);
+                        expect(oResult).to.equal(true);
+                    } else {
+                        expect(xResult).to.equal(false);
+                        expect(oResult).to.equal(false);
+                    }
+                }
+            }
+        });
     });
 });
