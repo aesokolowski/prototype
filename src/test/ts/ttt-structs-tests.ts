@@ -14,6 +14,7 @@ describe('xWinCondtions and oWinConditions:', () => {
         const xCondition: RegExp = xWinConditions[0];
         const oCondition: RegExp = oWinConditions[0];
 
+        console.log('simpleTestPattern:', simpleTestPatterns);
         console.log('condition 1 (X or O):');
         console.log('X|X|X');
         console.log('-----');
@@ -66,7 +67,11 @@ describe('xWinCondtions and oWinConditions:', () => {
             // condition 0            // condition 3
             'XXX-OO---', 'OOOXX-X--', 'XO-X--XO-', 'OXXOX-O--',
             // condition 1            // condition 2
-            '-O-XXXO--', 'XXOOOOX-X', 'OOXXOOXXX', 'OXXXX-OOO'
+            '-O-XXXO--', 'XXOOOOX-X', 'OOXXOOXXX', 'OXXXX-OOO',
+            // condition 4            // condition 5
+            'OX-OXX-XO', 'XO--OX-OX', 'O-X-OX--X', 'XXO-XO--O',
+            // condition 6            // condition 7
+            'XOO-X---X', 'O--XOXX-O', 'XOXOX-X-O', '-XOXO-OX-'
         ];
 
         console.log('patterns:', patterns);
@@ -79,7 +84,7 @@ describe('xWinCondtions and oWinConditions:', () => {
                 () => {
             expect(xWinConditions.length).to.equal(8);
             expect(oWinConditions.length).to.equal(8);
-        })
+        });
         it('first 8 patterns', () => {
             for (let i = 0; i < xWinConditions.length; i++) {
                 const xCondition: RegExp = xWinConditions[i];
@@ -91,28 +96,45 @@ describe('xWinCondtions and oWinConditions:', () => {
                     const oResult = oCondition.test(pattern);
 
                     // assume false, just code the branches with a true
-                    if (i === 0 && j === 0) {
+                    if (
+                       (i === 0 && j === 0) || (i === 1 && j === 4) ||
+                       (i === 2 && j === 6) || (i === 3 && j === 2)
+                    ) {
                         expect(xResult).to.equal(true);
                         expect(oResult).to.equal(false);
-                    } else if (i === 0 && j === 1) {
+                    } else if (
+                        (i === 0 && j === 1) || (i === 1 && j === 5) ||
+                        (i === 2 && j === 7) || (i === 3 && j === 3)
+                    ) {
                         expect(xResult).to.equal(false);
                         expect(oResult).to.equal(true);
-                    } else if (i === 1 && j === 4) {
-                        expect(xResult).to.equal(true);
-                        expect(oResult).to.equal(false);
-                    } else if (i === 1 && j === 5) {
+                    } else {
                         expect(xResult).to.equal(false);
-                        expect(oResult).to.equal(true);
-                    } else if (i === 2 && j === 6) {
+                        expect(oResult).to.equal(false);
+                    }
+                }
+            }
+        });
+        it('last set of 8 patterns:', () => {
+            for (let i = 0; i < xWinConditions.length; i++) {
+                const xCondition: RegExp = xWinConditions[i];
+                const oCondition: RegExp = oWinConditions[i];
+
+                for (let j = 8; j < 16; j++) {
+                    const pattern = patterns[j];
+                    const xResult = xCondition.test(pattern);
+                    const oResult = oCondition.test(pattern);
+
+                    if (
+                        (i === 4 && j === 8) || (i === 5 && j === 10) ||
+                        (i === 6 && j === 12) || (i === 7 && j === 14) 
+                    ) { 
                         expect(xResult).to.equal(true);
                         expect(oResult).to.equal(false);
-                    } else if (i === 2 && j === 7) {
-                        expect(xResult).to.equal(false);
-                        expect(oResult).to.equal(true);
-                    } else if (i === 3 && j === 2) {
-                        expect(xResult).to.equal(true);
-                        expect(oResult).to.equal(false);
-                    } else if (i === 3 && j === 3) {
+                    } else if (
+                        (i === 4 && j === 9) || (i === 5 && j === 11) ||
+                        (i === 6 && j === 13) || (i === 7 && j === 15)
+                    ) {
                         expect(xResult).to.equal(false);
                         expect(oResult).to.equal(true);
                     } else {

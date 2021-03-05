@@ -6,7 +6,7 @@ const xWinConditions = [
     /^[OX-]{6}XXX$/,
     // vertical
     /^X[OX-]{2}X[OX-]{2}X[OX-]{2}$/,
-    /^[OX-]X[OX-]{2}X\[OX-]{2}X[OX-]$/,
+    /^[OX-]X[OX-]{2}X[OX-]{2}X[OX-]$/,
     /^[OX-]{2}X[OX-]{2}X[OX-]{2}X$/,
     // diagonal
     /^X[OX-]{3}X[OX-]{3}X$/,
@@ -18,7 +18,7 @@ const oWinConditions = [
     /^[OX-]{3}OOO[OX-]{3}$/,
     /^[OX-]{6}OOO$/,
     /^O[OX-]{2}O[OX-]{2}O[OX-]{2}$/,
-    /^[OX-]O[OX-]{2}O[OX-]{2}O\[OX-\]$/,
+    /^[OX-]O[OX-]{2}O[OX-]{2}O[OX-]$/,
     /^[OX-]{2}O[OX-]{2}O[OX-]{2}O$/,
     /^O[OX-]{3}O[OX-]{3}O$/,
     /^[OX-]{2}O[OX-]O[OX-]O[OX-]{2}$/
