@@ -24,7 +24,4 @@ const oWinConditions = [
     /^[OX-]{2}O[OX-]O[OX-]O[OX-]{2}$/
 ];
 
-module.exports = {
-    xWinConditions,
-    oWinConditions
-};
+export { xWinConditions, oWinConditions };
