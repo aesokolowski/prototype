@@ -66,6 +66,16 @@
 						</configuration>
 					</execution>
 
+                    <execution>
+						<id>prepare tests</id>
+						<goals>
+							<goal>npm</goal>
+						</goals>
+						<configuration>
+							<arguments>run prepare-tests</arguments>
+						</configuration>
+					</execution>
+
 					<execution>
 						<id>npm test</id>
 						<goals>

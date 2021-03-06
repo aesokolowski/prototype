@@ -14,14 +14,6 @@ describe('xWinCondtions and oWinConditions:', () => {
         const xCondition: RegExp = xWinConditions[0];
         const oCondition: RegExp = oWinConditions[0];
 
-        console.log('simpleTestPattern:', simpleTestPatterns);
-        console.log('condition 1 (X or O):');
-        console.log('X|X|X');
-        console.log('-----');
-        console.log(' | | ');
-        console.log('-----');
-        console.log(' | | ');
-
         it('first pattern fails first conditon of each', () => {
             const pattern = simpleTestPatterns[0];
 
@@ -46,13 +38,6 @@ describe('xWinCondtions and oWinConditions:', () => {
         const xCondition: RegExp = xWinConditions[6];
         const oCondition: RegExp = oWinConditions[6];
 
-        console.log('condition 2:');
-        console.log('X| | ');
-        console.log('-----');
-        console.log(' |X| ');
-        console.log('-----');
-        console.log(' | |X');
-
         it('fourth pattern passes O but not X', () => {
             const pattern = simpleTestPatterns[3];
 
@@ -74,7 +59,6 @@ describe('xWinCondtions and oWinConditions:', () => {
             'XOO-X---X', 'O--XOXX-O', 'XOXOX-X-O', '-XOXO-OX-'
         ];
 
-        console.log('patterns:', patterns);
         it ('ensure both condition arrays are Arrays and of the same length',
                 () => {
             expect(xWinConditions).to.be.an.array();

@@ -12,7 +12,7 @@ $test_files_dir = $test_root + "test_files\"
 $tf_dest_dir = $test_root + "transpiled\test_files\"
 $test_dest_dir = $test_root + "transpiled\"
 
-if ($a0 -ieq "--clean" -or $a1 -ieq "-c") {
+if ($a0 -ieq "--clean" -or $a0 -ieq "-c") {
     Write-Output "removing test files..."
     if (Test-Path -Path $test_files_js -Type Leaf) {
         Remove-Item $test_files_js
