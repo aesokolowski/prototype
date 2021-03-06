@@ -3,6 +3,7 @@ import React from 'react';
 import TicTacRow from './components/TicTacRow';
 
 import { idToBoardIndex } from '../code/tttHelpers';
+import { xWinConditions, oWinConditions } from '../struct/tttStructs';
 
 type TicTacToeProps = { ids: string[][] };
 // This component holds state which affects the whole board --
@@ -33,10 +34,17 @@ class TicTacToe extends React.Component<TicTacToeProps,
     }
 
     componentDidUpdate(prevProps: TicTacToeProps, prevState: TicTacToeState) {
-        console.log('prevState:');
-        console.dir(prevState);
-        console.log('this.state:');
-        console.dir(this.state);
+        const didXWin = this.checkForWin(xWinConditions);
+
+        if (!didXWin) {
+            const didOWin = this.checkForWin(oWinConditions);
+
+            if (didOWin) {
+                alert("O Won!");
+            }
+        } else {
+            alert("X Won!");
+        }
     }
 
     changeTurn(id: string) {
@@ -64,6 +72,16 @@ class TicTacToe extends React.Component<TicTacToeProps,
             console.error(error);
             this.setState({ errorMessage: ERR_MSG });
         }
+    }
+
+    checkForWin(conditions: RegExp[]) {
+        for (let condition of conditions) {
+            if (condition.test(this.state.board)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     render() {
