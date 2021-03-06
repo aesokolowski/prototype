@@ -47,4 +47,8 @@ node/
 src/main/resources/static/built/
 
 ## Transpiled TypeScript for testing ##
-src/test/ts/transpiled/
+src/test/ts/transpiled/*.js
+src/test/ts/transpiled/test_files/*.js
+
+## Script-generated files for testing ##
+src/test/ts/test_files/*.ts
