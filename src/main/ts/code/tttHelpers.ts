@@ -54,7 +54,7 @@ const idToBoardIndex = (id: string) => {
             break;
         default:
             throw Error('Invalid board coordinates "' + boardIndex +
-                    '" @tttHelpers::boardIndex.');
+                    '" @tttHelpers::idToBoardIndex.');
     }
 
     return boardIndex;

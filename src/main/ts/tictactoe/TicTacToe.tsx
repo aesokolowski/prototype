@@ -36,6 +36,7 @@ class TicTacToe extends React.Component<TicTacToeProps,
         };
         this.changeTurn = this.changeTurn.bind(this);
         this.isLocked = this.isLocked.bind(this);
+        this.resetBoard = this.resetBoard.bind(this);
     }
 
     componentDidUpdate(prevProps: TicTacToeProps, prevState: TicTacToeState) {
@@ -107,6 +108,16 @@ class TicTacToe extends React.Component<TicTacToeProps,
         return this.state.locked;
     }
 
+    resetBoard() {
+        this.setState({
+            currentTurn: 'X',
+            turnMessage: 'X' + TURN_MSG,
+            errorMessage: '',
+            board: '---------',
+            locked: false
+        });
+    }
+
     render() {
         return (
             <div>
@@ -125,7 +136,7 @@ class TicTacToe extends React.Component<TicTacToeProps,
                             ))
                         }</tbody>
                     </table>
-                    <ResetButton />
+                    <ResetButton resetBoard={this.resetBoard} />
                 </div>
                 <p>{this.state.turnMessage}</p>
                 <p>{this.state.errorMessage}</p>

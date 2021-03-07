@@ -39,7 +39,17 @@ class TicTacCol extends React.Component<TicTacColProps,
     }
 
     componentDidUpdate() {
-        if (this.state.board != this.props.board) {
+        const empty = '---------'
+
+        if (this.props.board === empty && this.state.board !== empty) {
+            this.setState({ isPlayed: false,
+                playedBy: null,
+                board: empty,
+                gameOver: false
+            });
+            this.space.current.innerText = '';
+            this.space.current.className = 'ttt-celement';
+        } else if (this.state.board != this.props.board) {
             this.setState({ board: this.props.board });
         } else if (this.props.isLocked() && this.state.gameOver === false) {
             this.setState({ gameOver: true });

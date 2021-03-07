@@ -11,13 +11,7 @@ table {
 }
 
 .ttt-winner {
-    color: #a82929;
-}
-
-.ttt-field {
-    display: flex;
-    align-items: flex-end;
-    
+    color: #2cb7cf;
 }
 
 .ttt-celement#ttt-cell00, .ttt-winner#ttt-cell00 {
@@ -54,4 +48,17 @@ table {
 .ttt-celement#ttt-cell22, .ttt-winner#ttt-cell22 {
     border-right: none;
     border-bottom: none;
+}
+
+.ttt-field {
+    display: flex;
+    align-items: flex-end;
+}
+
+.ttt-button {
+    background-color: #333333;
+    color: #2cb7cf;
+    font-size: 1.25em;
+    margin-left: 15px;
+    padding: 7px 14px;
 }
