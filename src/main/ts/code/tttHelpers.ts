@@ -1,3 +1,5 @@
+import { xWinConditions, oWinConditions } from '../struct/tttStructs'
+
 // generates the IDs for the tic-tac-toe spaces used in TSX and CSS
 const generateIds = () => {
     const prefix = 'ttt-cell';
@@ -58,4 +60,173 @@ const idToBoardIndex = (id: string) => {
     return boardIndex;
 };
 
-export { generateIds, idToBoardIndex };
+const didIContribute = (
+    board: string,
+    playedBy: 'X' | 'O' | null,
+    id: string
+) => {
+    if (playedBy === 'X') {
+        for (let condition of xWinConditions) {
+            if (condition.test(board) &&
+                    didIReallyContribute(board, id, 'X')) {
+                return true;
+            }
+        }
+    } else if (playedBy === 'O') {
+        for (let condition of oWinConditions) {
+            if (condition.test(board) &&
+                    didIReallyContribute(board, id, 'O')) {
+                return true;
+            }
+        }
+    }
+
+    return false
+};
+
+const didIReallyContribute = (
+    board: string,
+    id: string,
+    playedBy: 'X' | 'O'
+) => {
+    switch (id) {
+        case 'ttt-cell00':
+            if (topRow(board, playedBy) || leftColumn(board, playedBy) ||
+                    backSlash(board, playedBy)) {
+                return true;
+            }
+
+            break;
+        case 'ttt-cell01':
+            if (topRow(board, playedBy) || middleColumn(board, playedBy)) {
+                return true;
+            }
+
+            break;
+        case 'ttt-cell02':
+            if (topRow(board, playedBy) || rightColumn(board, playedBy) ||
+                    fowardSlash(board, playedBy)) {
+                return true;
+            }
+
+            break;
+        case 'ttt-cell10':
+            if (middleRow(board, playedBy) || leftColumn(board, playedBy)) {
+                return true;
+            }
+
+            break;
+        case 'ttt-cell11':
+            if (middleRow(board, playedBy) ||
+                    middleColumn(board, playedBy) ||
+                    backSlash(board, playedBy) ||
+                    fowardSlash(board, playedBy)) {
+                return true;
+            }
+
+            break;
+        case 'ttt-cell12':
+            if (middleRow(board, playedBy) || rightColumn(board, playedBy)) {
+                return true;
+            }
+
+            break;
+        case 'ttt-cell20':
+            if (bottomRow(board, playedBy) || leftColumn(board, playedBy) ||
+                    fowardSlash(board, playedBy)) {
+                return true;
+            }
+
+            break;
+        case 'ttt-cell21':
+            if (bottomRow(board, playedBy) || middleColumn(board, playedBy)) {
+                return true;
+            }
+            break;
+        case 'ttt-cell22':
+            if (bottomRow(board, playedBy) || rightColumn(board, playedBy) ||
+                    backSlash(board, playedBy)) {
+                return true;
+            }
+            break;
+        default:
+            throw new Error('Invalid cell id "' + id +
+                    '"@tttHelpers::didIReallyContribute');
+    }
+
+    return false;
+};
+
+const topRow = (board: string, playedBy: 'X' | 'O') => {
+    if (board[0] === playedBy && board[1] === playedBy &&
+            board[2] === playedBy) {
+        return true;
+    }
+
+    return false;
+};
+
+const middleRow = (board: string, playedBy: 'X' | 'O') => {
+    if (board[3] === playedBy && board[4] === playedBy &&
+            board[5] === playedBy) {
+        return true;
+    }
+
+    return false;
+};
+
+const bottomRow = (board: string, playedBy: 'X' | 'O') => {
+    if (board[6] === playedBy && board[7] === playedBy &&
+            board[8] === playedBy) {
+        return true;
+    }
+
+    return false;
+};
+
+const leftColumn = (board: string, playedBy: 'X' | 'O') => {
+    if (board[0] === playedBy && board[3] === playedBy &&
+            board[6] === playedBy) {
+        return true;
+    }
+
+    return false;
+};
+
+const middleColumn = (board: string, playedBy: 'X' | 'O') => {
+    if (board[1] === playedBy && board[4] === playedBy &&
+            board[7] === playedBy) {
+        return true;
+    }
+
+    return false;
+};
+
+const rightColumn = (board: string, playedBy: 'X' | 'O') => {
+    if (board[2] === playedBy && board[5] === playedBy &&
+            board[8] === playedBy) {
+        return true;
+    }
+
+    return false;
+};
+
+const backSlash = (board: string, playedBy: 'X' | 'O') => {
+    if (board[0] === playedBy && board[4] === playedBy &&
+            board[8] === playedBy) {
+        return true;
+    }
+
+    return false;
+};
+
+const fowardSlash = (board: string, playedBy: 'X' | 'O') => {
+    if (board[2] === playedBy && board[4] === playedBy &&
+           board[6] === playedBy) {
+        return true;
+    }
+
+    return false;
+};
+
+export { generateIds, idToBoardIndex, didIContribute };
