@@ -1,5 +1,6 @@
 import React from 'react';
 
+import ResetButton from './components/ResetButton'
 import TicTacRow from './components/TicTacRow';
 
 import { idToBoardIndex } from '../code/tttHelpers';
@@ -109,20 +110,23 @@ class TicTacToe extends React.Component<TicTacToeProps,
     render() {
         return (
             <div>
-                <table>
-                    <tbody>{
-                        this.props.ids.map((idRow, idx) => (
-                            <TicTacRow
-                                key={idx}
-                                idRow={idRow}
-                                board={this.state.board}
-                                currentTurn={this.state.currentTurn}
-                                changeTurn={this.changeTurn}
-                                isLocked={this.isLocked}
-                            />
-                        ))
-                    }</tbody>
-                </table>
+                <div className="ttt-field">
+                    <table>
+                        <tbody>{
+                            this.props.ids.map((idRow, idx) => (
+                                <TicTacRow
+                                    key={idx}
+                                    idRow={idRow}
+                                    board={this.state.board}
+                                    currentTurn={this.state.currentTurn}
+                                    changeTurn={this.changeTurn}
+                                    isLocked={this.isLocked}
+                                />
+                            ))
+                        }</tbody>
+                    </table>
+                    <ResetButton />
+                </div>
                 <p>{this.state.turnMessage}</p>
                 <p>{this.state.errorMessage}</p>
             </div>

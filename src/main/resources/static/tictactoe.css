@@ -2,7 +2,7 @@ table {
     border-collapse: collapse;
 }
 
-.ttt-celement {
+.ttt-celement, .ttt-winner {
     border: 4px solid #222222;
     font-size: 72px;
     height: 100px;
@@ -11,12 +11,13 @@ table {
 }
 
 .ttt-winner {
-    border: 4px solid #222222;
     color: #a82929;
-    font-size: 72px;
-    height: 100px;
-    width: 100px;
-    text-align: center;
+}
+
+.ttt-field {
+    display: flex;
+    align-items: flex-end;
+    
 }
 
 .ttt-celement#ttt-cell00, .ttt-winner#ttt-cell00 {
