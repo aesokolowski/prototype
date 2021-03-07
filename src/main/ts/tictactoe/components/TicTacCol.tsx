@@ -2,11 +2,12 @@ import React from 'react';
 
 type TicTacColProps = {
     id: string,
+    board: string,
     currentTurn: 'X' | 'O',
-    changeTurn: (string) => void
+    changeTurn: (string) => void,
+    isLocked: () => boolean
 };
-// any state changes which would affect only a boolean cell
-type TicTacColState = { isPlayed: boolean };
+type TicTacColState = { isPlayed: boolean, board: string };
 
 interface TicTacCol {
     space: Ref<HTMLTableDataCellElement>
@@ -20,17 +21,23 @@ class TicTacCol extends React.Component<TicTacColProps,
     constructor(props: TicTacColProps) {
         super(props);
 
-        this.state = { isPlayed: false };
+        this.state = { isPlayed: false, board: this.props.board };
         this.space = React.createRef();
         this.playSpace = this.playSpace.bind(this);
     }
 
+    comoponentDidUpdate(prevProps: TicTacColProps, prevState: TicTacColState) {
+        if (this.state.board != this.props.board) {
+            this.setState({ board: this.props.board });
+        }
+    }
+
     playSpace(e: React.MouseEvent<HTMLTableDataCellElement, MouseEvent>) {
         e.preventDefault();
-        e.stopPropagation();
 
-        // only permit a space to be played if it hasn't been already
-        if (!this.state.isPlayed) {
+        // only permit a space to be played if the game isn't over
+        // or the space hasn't previously been played 
+        if (!(this.props.isLocked() || this.state.isPlayed)) {
             this.space.current.innerText = this.props.currentTurn;
             this.props.changeTurn(this.space.current.id);
             this.setState({ isPlayed: true });

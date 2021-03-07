@@ -13,11 +13,13 @@ type TicTacToeState = {
     currentTurn: 'X' | 'O',
     turnMessage: string,
     board: string,
-    errorMessage: string
+    errorMessage: string,
+    locked: boolean
 };
 
-const TURN_MSG = '\'s turn.';
-const ERR_MSG = 'Internal error. Try again, or try reloading the page.';
+const TURN_MSG = '\'s turn.',
+      WIN_MSG = ' Wins!',
+      ERR_MSG = 'Internal error. Try again, or try reloading the page.';
 
 class TicTacToe extends React.Component<TicTacToeProps,
         TicTacToeState> {
@@ -28,22 +30,16 @@ class TicTacToe extends React.Component<TicTacToeProps,
             currentTurn: 'X',
             turnMessage: 'X' + TURN_MSG,
             errorMessage: '',
-            board: '---------'
+            board: '---------',
+            locked: false
         };
         this.changeTurn = this.changeTurn.bind(this);
+        this.isLocked = this.isLocked.bind(this);
     }
 
     componentDidUpdate(prevProps: TicTacToeProps, prevState: TicTacToeState) {
-        const didXWin = this.checkForWin(xWinConditions);
-
-        if (!didXWin) {
-            const didOWin = this.checkForWin(oWinConditions);
-
-            if (didOWin) {
-                alert("O Won!");
-            }
-        } else {
-            alert("X Won!");
+        if (!this.state.locked) {
+            this.runCheck();
         }
     }
 
@@ -83,6 +79,32 @@ class TicTacToe extends React.Component<TicTacToeProps,
 
         return false;
     }
+    
+    runCheck() {
+        const didXWin = this.checkForWin(xWinConditions);
+
+        if (!didXWin) {
+            const didOWin = this.checkForWin(oWinConditions);
+
+            if (didOWin) {
+                this.setState({
+                    turnMessage: 'O' + WIN_MSG,
+                    errorMessage: '',
+                    locked: true
+                });
+            }
+        } else {
+            this.setState({
+                turnMessage: 'X' + WIN_MSG,
+                errorMessage: '',
+                locked: true
+            });
+        }
+    }
+
+    isLocked() {
+        return this.state.locked;
+    }
 
     render() {
         return (
@@ -93,8 +115,10 @@ class TicTacToe extends React.Component<TicTacToeProps,
                             <TicTacRow
                                 key={idx}
                                 idRow={idRow}
+                                board={this.state.board}
                                 currentTurn={this.state.currentTurn}
                                 changeTurn={this.changeTurn}
+                                isLocked={this.isLocked}
                             />
                         ))
                     }</tbody>
