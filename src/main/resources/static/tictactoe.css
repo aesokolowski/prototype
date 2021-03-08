@@ -55,10 +55,27 @@ table {
     align-items: flex-end;
 }
 
+.ttt-sidebar {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 314px;
+    margin-left: 15px;
+}
+
+.ttt-mode-item {
+    display: flex;
+    justify-content:flex-start;
+    margin: 0px 0px 6px 0px;
+}
+
+input#twoplayer, input#easy, input#hard {
+    margin-left: 3px;
+}
+
 .ttt-button {
     background-color: #333333;
     color: #2cb7cf;
     font-size: 1.25em;
-    margin-left: 15px;
     padding: 7px 14px;
 }

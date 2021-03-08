@@ -1,6 +1,7 @@
 import React from 'react';
 
-import ResetButton from './components/ResetButton'
+import ModeSelect from './components/ModeSelect';
+import ResetButton from './components/ResetButton';
 import TicTacRow from './components/TicTacRow';
 
 import { idToBoardIndex } from '../code/tttHelpers';
@@ -136,7 +137,10 @@ class TicTacToe extends React.Component<TicTacToeProps,
                             ))
                         }</tbody>
                     </table>
-                    <ResetButton resetBoard={this.resetBoard} />
+                    <aside className="ttt-sidebar">
+                        <ModeSelect />
+                        <ResetButton resetBoard={this.resetBoard} />
+                    </aside>
                 </div>
                 <p>{this.state.turnMessage}</p>
                 <p>{this.state.errorMessage}</p>

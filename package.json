@@ -20,8 +20,8 @@
     "scripts": {
         "prepare-tests": "@powershell -NoProfile -Command ./scripts/prepare-tests.ps1 --clean",
         "test": "mocha ./src/test/ts/transpiled/*.js",
-        "watch-dev": "cross-env NODE_ENV=development webpack -w -d -o ./target/classes/static/built/bundle.js",
-        "build": "cross-env NODE_ENV=production webpack -d -o ./target/classes/static/built/bundle.js"
+        "watch-dev": "cross-env NODE_ENV=development webpack -w",
+        "build": "cross-env NODE_ENV=production webpack"
     },
     "devDependencies": {
         "@babel/core": "^7.12.17",
