@@ -1,37 +1,102 @@
 import React from 'react';
 
-type ModeSelectProps = {};
-type ModeSelectState = {
-    mode: '2-player' | 'Easy' | 'Hard'
+import { Modes } from '../../struct/tttTypes'
+
+type ModeSelectProps = {
+    modeChanged: (Modes) => void
 };
+type ModeSelectState = {
+    mode: Modes,
+    counter: number
+};
+
+interface ModeSelect {
+    twoPlayerMode: Ref<HTMLInputElement>,
+    easyMode: Ref<HTMLInputElement>,
+    hardMode: Ref<HTMLInputElement>
+}
+interface Ref<HTMLInputElement> {
+    current: HTMLInputElement
+}
 
 class ModeSelect extends React.Component<ModeSelectProps,
         ModeSelectState> {
     constructor(props: ModeSelectProps) {
         super(props);
 
-        this.state = { mode: '2-player' };
+        this.twoPlayerMode = React.createRef();
+        this.easyMode = React.createRef();
+        this.hardMode = React.createRef();
+        this.state = { mode: '2-player', counter: 0 };
+        this.modeClicked = this.modeClicked.bind(this);
+    }
+
+    componentDidUpdate(prevProps: ModeSelectProps,
+                prevState: ModeSelectState) {
+        
+        if (this.state.mode !== prevState.mode) {
+            this.setState({ counter: this.state.counter + 1 } );
+        }
+        console.log('this.state:');
+        console.dir(this.state);
+        console.log('prevState:');
+        console.dir(prevState);
+        console.log('this.twoPlayerMode:');
+        console.dir(this.twoPlayerMode);
+        console.log('this.easyMode:');
+        console.dir(this.easyMode);
+        console.log('this.hardMode');
+        console.dir(this.hardMode);
+    }
+
+    modeClicked(e: React.ChangeEvent<HTMLInputElement>) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        const target = e.target as HTMLInputElement;
+
+        this.setState({
+            mode: target.value as Modes
+        });
+        this.props.modeChanged(target.value);
+    }
+
+    onModeChange(e: React.ChangeEvent<HTMLInputElement>) {
+        e.preventDefault();
+
+        // let propagate
     }
 
     render() {
         return (
-            <div className="ttt-mode-container">
-                <p className="ttt-mode-item">
-                    <input type="radio"
-                        id="two-player"
-                        name="mode"
-                        value="2-player"
-                    />
-                    <label htmlFor="two-player">2 Player</label>
-                </p>
-                <p className="ttt-mode-item">
-                    <input type="radio" id="easy" name="mode" value="Easy" />
-                    <label htmlFor="easy">Easy</label>
-                </p>
-                <p className="ttt-mode-item">
-                    <input type="radio" id="hard" name="mode" value="Hard" />
-                    <label htmlFor="hard">Hard</label>
-                </p>
+            <div className="ttt-mode-container" onChange={this.modeClicked}>
+                <input ref={this.twoPlayerMode}
+                    type="radio"
+                    id="two-player"
+                    name="mode"
+                    value="2-player"
+                    onChange={this.onModeChange}
+                    checked={this.state.mode === '2-player'}
+                />
+                <label htmlFor="two-player">2 Player</label>
+                <input ref={this.easyMode}
+                    type="radio"
+                    id="easy"
+                    name="mode"
+                    value="Easy"
+                    onChange={this.onModeChange}
+                    checked={this.state.mode === 'Easy'}
+                />
+                <label htmlFor="easy">Easy</label>
+                <input ref={this.hardMode}
+                    type="radio"
+                    id="hard"
+                    name="mode"
+                    value="Hard"
+                    onChange={this.onModeChange}
+                    checked={this.state.mode === 'Hard'}
+                />
+                <label htmlFor="hard">Hard</label>
             </div>
         );
     }

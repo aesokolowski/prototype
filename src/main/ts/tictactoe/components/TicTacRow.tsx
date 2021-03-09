@@ -1,14 +1,8 @@
 import React from 'react';
 
-import TicTacCol from './TicTacCol';
+import { TicTacRowProps } from '../../struct/tttTypes';
 
-type TicTacRowProps = {
-    idRow: string[],
-    board: string,
-    currentTurn: 'X' | 'O',
-    changeTurn: (string) => void,
-    isLocked: () => boolean
-};
+import TicTacCol from './TicTacCol';
 
 //  This component is functional because it's merely mapping the table row
 //  to columns and fowarding its props to the actual cells

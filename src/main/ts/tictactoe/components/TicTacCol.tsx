@@ -75,6 +75,7 @@ class TicTacCol extends React.Component<TicTacColProps,
 
     playSpace(e: React.MouseEvent<HTMLTableDataCellElement, MouseEvent>) {
         e.preventDefault();
+        e.stopPropagation();
 
         // only permit a space to be played if the game isn't over
         // or the space hasn't previously been played 

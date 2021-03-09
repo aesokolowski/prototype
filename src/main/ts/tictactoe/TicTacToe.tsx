@@ -4,20 +4,14 @@ import ModeSelect from './components/ModeSelect';
 import ResetButton from './components/ResetButton';
 import TicTacRow from './components/TicTacRow';
 
+import { TicTacToeProps, TicTacToeState } from '../struct/tttTypes'
+
 import { idToBoardIndex } from '../code/tttHelpers';
 import { xWinConditions, oWinConditions } from '../struct/tttStructs';
 
-type TicTacToeProps = { ids: string[][] };
 // This component holds state which affects the whole board --
 // the grandchild component TicTacCol holds state that only concerns
 // any individual cell
-type TicTacToeState = {
-    currentTurn: 'X' | 'O',
-    turnMessage: string,
-    board: string,
-    errorMessage: string,
-    locked: boolean
-};
 
 const TURN_MSG = '\'s turn.',
       WIN_MSG = ' Wins!',
@@ -38,6 +32,7 @@ class TicTacToe extends React.Component<TicTacToeProps,
         this.changeTurn = this.changeTurn.bind(this);
         this.isLocked = this.isLocked.bind(this);
         this.resetBoard = this.resetBoard.bind(this);
+        this.modeChanged = this.modeChanged.bind(this);
     }
 
     componentDidUpdate(prevProps: TicTacToeProps, prevState: TicTacToeState) {
@@ -119,6 +114,10 @@ class TicTacToe extends React.Component<TicTacToeProps,
         });
     }
 
+    modeChanged(mode: '2-player' | 'Easy' | 'Hard') {
+        console.log('detected mode change:', mode);
+    }
+
     render() {
         return (
             <div>
@@ -138,7 +137,7 @@ class TicTacToe extends React.Component<TicTacToeProps,
                         }</tbody>
                     </table>
                     <aside className="ttt-sidebar">
-                        <ModeSelect />
+                        <ModeSelect modeChanged={this.modeChanged} />
                         <ResetButton resetBoard={this.resetBoard} />
                     </aside>
                 </div>

@@ -60,6 +60,7 @@ table {
     flex-direction: column;
     justify-content: space-between;
     height: 314px;
+    min-width: 140px;
     margin-left: 15px;
 }
 
