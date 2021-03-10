@@ -4,7 +4,7 @@ import ModeSelect from './components/ModeSelect';
 import ResetButton from './components/ResetButton';
 import TicTacRow from './components/TicTacRow';
 
-import { TicTacToeProps, TicTacToeState } from '../struct/tttTypes'
+import { Modes, TicTacToeProps, TicTacToeState } from '../struct/tttTypes'
 
 import { idToBoardIndex } from '../code/tttHelpers';
 import { xWinConditions, oWinConditions } from '../struct/tttStructs';
@@ -27,7 +27,8 @@ class TicTacToe extends React.Component<TicTacToeProps,
             turnMessage: 'X' + TURN_MSG,
             errorMessage: '',
             board: '---------',
-            locked: false
+            locked: false,
+            resetButtonStyle: 'ttt-reset-locked'
         };
         this.changeTurn = this.changeTurn.bind(this);
         this.isLocked = this.isLocked.bind(this);
@@ -39,6 +40,8 @@ class TicTacToe extends React.Component<TicTacToeProps,
         if (!this.state.locked) {
             this.runCheck();
         }
+
+        this.toggleResetButtonStyle();
     }
 
     changeTurn(id: string) {
@@ -114,8 +117,18 @@ class TicTacToe extends React.Component<TicTacToeProps,
         });
     }
 
-    modeChanged(mode: '2-player' | 'Easy' | 'Hard') {
+    modeChanged(mode: Modes) {
         console.log('detected mode change:', mode);
+    }
+
+    toggleResetButtonStyle() {
+        if (this.state.board === '---------' &&
+                this.state.resetButtonStyle === 'ttt-reset-unlocked') {
+            this.setState({ resetButtonStyle: 'ttt-reset-locked' });
+        } else if (this.state.board !== '---------' &&
+                this.state.resetButtonStyle === 'ttt-reset-locked') {
+            this.setState({ resetButtonStyle: 'ttt-reset-unlocked'});
+        }
     }
 
     render() {
@@ -138,7 +151,10 @@ class TicTacToe extends React.Component<TicTacToeProps,
                     </table>
                     <aside className="ttt-sidebar">
                         <ModeSelect modeChanged={this.modeChanged} />
-                        <ResetButton resetBoard={this.resetBoard} />
+                        <ResetButton
+                            buttonStyle={this.state.resetButtonStyle}
+                            resetBoard={this.resetBoard}
+                        />
                     </aside>
                 </div>
                 <p>{this.state.turnMessage}</p>

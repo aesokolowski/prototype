@@ -1,6 +1,7 @@
 //  shared types
 type xOrO = 'X' | 'O';
 type Modes = '2-player' | 'Easy' | 'Hard';
+type resetButtonStyles = 'ttt-reset-unlocked' | 'ttt-reset-locked'
 
 //  TicTacToe.tsx
 type TicTacToeProps = { ids: string[][] };
@@ -12,7 +13,8 @@ type TicTacToeState = {
     //  and should throw an exception if non-conforming
     board: string,
     errorMessage: string,
-    locked: boolean
+    locked: boolean,
+    resetButtonStyle: resetButtonStyles
 };
 
 // TicTacRow.tsx
@@ -42,6 +44,7 @@ type TicTacColState = {
 
 // ResetButton
 type ResetButtonProps = {
+    buttonStyle: resetButtonStyles,
     resetBoard: () => void
 };
 

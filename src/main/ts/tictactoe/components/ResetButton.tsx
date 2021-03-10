@@ -3,10 +3,14 @@ import React from 'react';
 import { ResetButtonProps } from '../../struct/tttTypes';
 
 const ResetButton: React.FunctionComponent<ResetButtonProps> =
-        ({ children, resetBoard }) => (
-    <button type="button" className="ttt-button" onClick={resetBoard}>
+        ({ children, buttonStyle, resetBoard }) => (
+    <div
+        id="reset-button"
+        className={buttonStyle}
+        onClick={resetBoard}
+    >
         Reset
-    </button>
+    </div>
 );
 
 export default ResetButton;

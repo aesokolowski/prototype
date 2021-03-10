@@ -70,13 +70,16 @@ table {
     margin: 0px 0px 6px 0px;
 }
 
-input#twoplayer, input#easy, input#hard {
-    margin-left: 3px;
-}
-
-.ttt-button {
+.ttt-reset-locked#reset-button, .ttt-reset-unlocked#reset-button {
     background-color: #333333;
-    color: #2cb7cf;
     font-size: 1.25em;
     padding: 7px 14px;
+}
+
+.ttt-reset-locked#reset-button {
+    color: #BBBBBB;
+}
+
+.ttt-reset-unlocked#reset-button {
+    color: #2cb7cf;
 }
