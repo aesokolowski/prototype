@@ -1,24 +1,13 @@
 import React from 'react';
 
-import { didIContribute } from '../../code/tttHelpers'
+import { didIContribute } from '../../code/tttHelpers';
 
-type TicTacColProps = {
-    id: string,
-    board: string,
-    currentTurn: 'X' | 'O',
-    changeTurn: (string) => void,
-    isLocked: () => boolean
-};
-type TicTacColState = {
-    isPlayed: boolean,
-    playedBy: 'X' | 'O' | null,
-    board: string,
-    gameOver: boolean
-};
+import { TicTacColProps, TicTacColState } from '../../struct/tttTypes';
 
 interface TicTacCol {
     space: Ref<HTMLTableDataCellElement>
 }
+
 interface Ref<HTMLTableDataCellElement> {
     current: HTMLTableDataCellElement
 }

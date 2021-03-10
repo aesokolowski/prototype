@@ -1,14 +1,6 @@
 import React from 'react';
 
-import { Modes } from '../../struct/tttTypes'
-
-type ModeSelectProps = {
-    modeChanged: (Modes) => void
-};
-type ModeSelectState = {
-    mode: Modes,
-    counter: number
-};
+import { Modes, ModeSelectProps, ModeSelectState } from '../../struct/tttTypes'
 
 interface ModeSelect {
     twoPlayerMode: Ref<HTMLInputElement>,
@@ -37,6 +29,7 @@ class ModeSelect extends React.Component<ModeSelectProps,
         if (this.state.mode !== prevState.mode) {
             this.setState({ counter: this.state.counter + 1 } );
         }
+
         console.log('this.state:');
         console.dir(this.state);
         console.log('prevState:');
@@ -51,7 +44,6 @@ class ModeSelect extends React.Component<ModeSelectProps,
 
     modeClicked(e: React.ChangeEvent<HTMLInputElement>) {
         e.preventDefault();
-        e.stopPropagation();
 
         const target = e.target as HTMLInputElement;
 
@@ -61,21 +53,15 @@ class ModeSelect extends React.Component<ModeSelectProps,
         this.props.modeChanged(target.value);
     }
 
-    onModeChange(e: React.ChangeEvent<HTMLInputElement>) {
-        e.preventDefault();
-
-        // let propagate
-    }
-
     render() {
         return (
-            <div className="ttt-mode-container" onChange={this.modeClicked}>
+            <div className="ttt-mode-container">
                 <input ref={this.twoPlayerMode}
                     type="radio"
                     id="two-player"
                     name="mode"
                     value="2-player"
-                    onChange={this.onModeChange}
+                    onChange={this.modeClicked}
                     checked={this.state.mode === '2-player'}
                 />
                 <label htmlFor="two-player">2 Player</label>
@@ -84,7 +70,7 @@ class ModeSelect extends React.Component<ModeSelectProps,
                     id="easy"
                     name="mode"
                     value="Easy"
-                    onChange={this.onModeChange}
+                    onChange={this.modeClicked}
                     checked={this.state.mode === 'Easy'}
                 />
                 <label htmlFor="easy">Easy</label>
@@ -93,7 +79,7 @@ class ModeSelect extends React.Component<ModeSelectProps,
                     id="hard"
                     name="mode"
                     value="Hard"
-                    onChange={this.onModeChange}
+                    onChange={this.modeClicked}
                     checked={this.state.mode === 'Hard'}
                 />
                 <label htmlFor="hard">Hard</label>

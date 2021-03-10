@@ -1,8 +1,6 @@
 import React from 'react';
 
-type ResetButtonProps = {
-    resetBoard: () => void
-};
+import { ResetButtonProps } from '../../struct/tttTypes';
 
 const ResetButton: React.FunctionComponent<ResetButtonProps> =
         ({ children, resetBoard }) => (
