@@ -1,6 +1,12 @@
 import React from 'react';
 
-import { Modes, ModeSelectProps, ModeSelectState } from '../../struct/tttTypes'
+import {
+    Modes,
+    ModeSelectProps,
+    ModeSelectState
+} from '../../struct/tttTypes';
+
+import ModeSelectButton from './ModeSelectButton';
 
 interface ModeSelect {
     twoPlayerMode: Ref<HTMLInputElement>,
@@ -11,14 +17,13 @@ interface Ref<HTMLInputElement> {
     current: HTMLInputElement
 }
 
+const modeArray: Modes[] = ['2-player', 'Easy', 'Hard'];
+
 class ModeSelect extends React.Component<ModeSelectProps,
         ModeSelectState> {
     constructor(props: ModeSelectProps) {
         super(props);
 
-        this.twoPlayerMode = React.createRef();
-        this.easyMode = React.createRef();
-        this.hardMode = React.createRef();
         this.state = { mode: '2-player', counter: 0 };
         this.modeClicked = this.modeClicked.bind(this);
     }
@@ -30,6 +35,7 @@ class ModeSelect extends React.Component<ModeSelectProps,
             this.setState({ counter: this.state.counter + 1 } );
         }
 
+        // DEBUG
         console.log('this.state:');
         console.dir(this.state);
         console.log('prevState:');
@@ -40,10 +46,12 @@ class ModeSelect extends React.Component<ModeSelectProps,
         console.dir(this.easyMode);
         console.log('this.hardMode');
         console.dir(this.hardMode);
+        // END DEBUG
     }
 
     modeClicked(e: React.ChangeEvent<HTMLInputElement>) {
         e.preventDefault();
+        e.stopPropagation();
 
         const target = e.target as HTMLInputElement;
 
@@ -55,6 +63,12 @@ class ModeSelect extends React.Component<ModeSelectProps,
 
     render() {
         return (
+            <div className="ttt-mode-container">{
+                modeArray.map((mode, idx) =>
+                    <ModeSelectButton key={idx} id={idx + 1}/>
+                )
+            }</div>
+            /*
             <div className="ttt-mode-container">
                 <input ref={this.twoPlayerMode}
                     type="radio"
@@ -84,6 +98,7 @@ class ModeSelect extends React.Component<ModeSelectProps,
                 />
                 <label htmlFor="hard">Hard</label>
             </div>
+            */
         );
     }
 }

@@ -53,8 +53,13 @@ type ModeSelectState = {
     mode: Modes,
     counter: number
 };
+
+//  ModeSelectButton
+type ModeSelectButtonProps = {
+    id: number 
+};
 // no matter how long this export list gets it's going to be on  one line until
 // I get around to tweaking a script to accomodate multi-line export
 // statements... which shouldn't be too hard but enough side tracking for
 // now, brass tacks only 2021-08-03
-export { xOrO, Modes, TicTacToeProps, TicTacToeState, TicTacRowProps, TicTacColProps, TicTacColState, ResetButtonProps, ModeSelectProps, ModeSelectState };
+export { xOrO, Modes, TicTacToeProps, TicTacToeState, TicTacRowProps, TicTacColProps, TicTacColState, ResetButtonProps, ModeSelectProps, ModeSelectState, ModeSelectButtonProps };
