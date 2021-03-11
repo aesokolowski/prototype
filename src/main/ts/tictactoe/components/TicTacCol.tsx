@@ -28,6 +28,11 @@ class TicTacCol extends React.Component<TicTacColProps,
         this.playSpace = this.playSpace.bind(this);
     }
 
+    // debating whether I should save this.props.whatever or
+    // this.state.whatever gets used a lot to variables called whatever, but
+    // honestly I kind of prefer to keep props and state alone so I don't
+    // confuse assignment with referencing, so this might be an exception
+    // to my normal rule
     componentDidUpdate() {
         const empty = '---------'
 

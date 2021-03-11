@@ -133,6 +133,15 @@ describe('xWinCondtions and oWinConditions:', () => {
 
 describe('fullBoard:', () => {
     describe('what is it?:', () => {
+        it('is an object', () => {
+            expect(typeof fullBoard).to.equal('object');
+        });
+        it('matches an expected string representation', () => {
+            expect(fullBoard.toString()).to.equal('/^[OX]{9}$/');
+        });
+    });
+
+    describe('what does it do?:', () => {
         const patterns = [
                                       // 1 too many characters
             'XOXOXOXOX', '---------', 'XOXOXOXOXO',
@@ -141,12 +150,7 @@ describe('fullBoard:', () => {
                                       // impossible config that should pass
             'XOXO-XOXO', 'O-XXOO-XO', 'XXXOOOXXX'
         ];
-        it('is an object', () => {
-            expect(typeof fullBoard).to.equal('object');
-        });
-        it('matches an expected string representation', () => {
-            expect(fullBoard.toString()).to.equal('/^[OX]{9}$/');
-        });
+
         it('passes 9 random tests', () => {
             for (let i = 0; i < patterns.length; i++) {
                 const pattern = patterns[i];

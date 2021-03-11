@@ -77,8 +77,7 @@ table {
     flex-direction: column;
     justify-content: space-between;
     height: 314px;
-    min-width: 140px;
-    margin-left: 15px;
+    margin-left: 30px;
 }
 
 .ttt-mode-item {
@@ -87,19 +86,31 @@ table {
     margin: 0px 0px 6px 0px;
 }
 
-.ttt-reset-locked#reset-button, .ttt-reset-unlocked#reset-button {
-    background-color: #333333;
+.ttt-mode-button-active, .ttt-mode-button-inactive {
+    margin-top: 4px;
+}
+
+.ttt-reset-locked#reset-button, .ttt-reset-unlocked#reset-button,
+        .ttt-mode-button-active, .ttt-mode-button-inactive {
     border-radius: 7px;
     font-size: 1.25em;
     padding: 7px 14px;
 }
 
-.ttt-reset-locked#reset-button {
+.ttt-reset-locked#reset-button, .ttt-reset-unlocked#reset-button, .ttt-mode-button-inactive {
+    background-color: #555555;
+}
+
+.ttt-mode-button-active {
+    background-color: #333333;
+}
+
+.ttt-reset-locked#reset-button, .ttt-mode-button-active {
     color: #BBBBBB;
     cursor: default;
 }
 
-.ttt-reset-unlocked#reset-button {
+.ttt-reset-unlocked#reset-button, .ttt-mode-button-inactive {
     color: #2cb7cf;
     cursor: pointer;
 }

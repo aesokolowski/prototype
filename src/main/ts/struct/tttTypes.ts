@@ -20,7 +20,7 @@ type TicTacToeState = {
 
 // TicTacRow.tsx
 type TicTacRowProps = {
-    idRow: string[];
+    idRow: string[],
     board: string,
     currentTurn: xOrO,
     changeTurn: (string) => void,
@@ -35,7 +35,6 @@ type TicTacColProps = {
     changeTurn: (string) => void,
     isLocked: () => boolean
 };
-
 type TicTacColState = {
     isPlayed: boolean,
     playedBy: xOrO,
@@ -45,23 +44,17 @@ type TicTacColState = {
 };
 
 // ResetButton
-type ResetButtonProps = {
-    buttonStyle: resetButtonStyles,
-    resetBoard: () => void
-};
+type ResetButtonProps = { buttonStyle: resetButtonStyles, resetBoard: () => void };
 
 // ModeSelect
-type ModeSelectProps = {
-    modeChanged: (modes) => void
-};
-type ModeSelectState = {
-    mode: Modes,
-    counter: number
-};
+type ModeSelectProps = { modeChanged: (modes) => void };
+type ModeSelectState = { mode: Modes, counter: number };
 
 //  ModeSelectButton
 type ModeSelectButtonProps = {
-    id: number 
+    isActive: boolean,
+    mode: Modes,
+    modeClicked: React.MouseEventHandler<HTMLDivElement>
 };
 // no matter how long this export list gets it's going to be on  one line until
 // I get around to tweaking a script to accomodate multi-line export

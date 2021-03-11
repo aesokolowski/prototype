@@ -67,7 +67,7 @@ foreach($test in $test_list) {
     $file_contents | Set-Content $test
 }
 
-Write-Output "compiling typescript files..."
+Write-Output "transpiling typescript files..."
 foreach($test_file in $test_list) {
     tsc $test_file --outDir $tf_dest_dir
 }
