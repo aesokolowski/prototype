@@ -1,7 +1,8 @@
 //  shared types
 type xOrO = 'X' | 'O';
 type Modes = '2-player' | 'Easy' | 'Hard';
-type resetButtonStyles = 'ttt-reset-unlocked' | 'ttt-reset-locked'
+type resetButtonStyles = 'ttt-reset-unlocked' | 'ttt-reset-locked';
+type celementStyles = 'ttt-celement-unplayed'| 'ttt-celement-played' | 'ttt-winner'; 
 
 //  TicTacToe.tsx
 type TicTacToeProps = { ids: string[][] };
@@ -39,7 +40,8 @@ type TicTacColState = {
     isPlayed: boolean,
     playedBy: xOrO,
     board: string,
-    gameOver: boolean
+    gameOver: boolean,
+    celementStyle: celementStyles
 };
 
 // ResetButton

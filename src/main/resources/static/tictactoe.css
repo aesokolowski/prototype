@@ -2,7 +2,7 @@ table {
     border-collapse: collapse;
 }
 
-.ttt-celement, .ttt-winner {
+.ttt-celement-unplayed, .ttt-celement-played, .ttt-winner {
     border: 4px solid #222222;
     font-size: 72px;
     height: 100px;
@@ -14,38 +14,54 @@ table {
     color: #2cb7cf;
 }
 
-.ttt-celement#ttt-cell00, .ttt-winner#ttt-cell00 {
+.ttt-winner, .ttt-celement-played {
+    cursor: default;
+}
+
+.ttt-celement-unplayed {
+    cursor: pointer;
+}
+
+.ttt-celement-unplayed#ttt-cell00, .ttt-celement-played#ttt-cell00,
+        .ttt-winner#ttt-cell00 {
     border-top: none;
     border-left: none;
 }
 
-.ttt-celement#ttt-cell01, .ttt-winner#ttt-cell01 {
+.ttt-celement-unplayed#ttt-cell01, .ttt-celement-played#ttt-cell01,
+        .ttt-winner#ttt-cell01 {
     border-top: none;
 }
 
-.ttt-celement#ttt-cell02, .ttt-winner#ttt-cell02 {
+.ttt-celement-unplayed#ttt-cell02, .ttt-celement-played#ttt-cell02,
+        .ttt-winner#ttt-cell02 {
     border-top: none;
     border-right: none;
 }
 
-.ttt-celement#ttt-cell10, .ttt-winner#ttt-cell10{
+.ttt-celement-unplayed#ttt-cell10, .ttt-celement-played#ttt-cell10,
+        .ttt-winner#ttt-cell10 {
     border-left: none;
 }
 
-.ttt-celement#ttt-cell12, .ttt-winner#ttt-cell12 {
+.ttt-celement-unplayed#ttt-cell12, .ttt-celement-played#ttt-cell12,
+        .ttt-winner#ttt-cell12 {
     border-right: none;
 }
 
-.ttt-celement#ttt-cell20, .ttt-winner#ttt-cell20 {
+.ttt-celement-unplayed#ttt-cell20, .ttt-celement-played#ttt-cell20,
+        .ttt-winner#ttt-cell20 {
     border-bottom: none;
     border-left: none;
 }
 
-.ttt-celement#ttt-cell21, .ttt-winner#ttt-cell21 {
+.ttt-celement-unplayed#ttt-cell21, .ttt-celement-played#ttt-cell21,
+        .ttt-winner#ttt-cell21 {
     border-bottom: none;
 }
 
-.ttt-celement#ttt-cell22, .ttt-winner#ttt-cell22 {
+.ttt-celement-unplayed#ttt-cell22, .ttt-celement-played#ttt-cell22, 
+.ttt-winner#ttt-cell22 {
     border-right: none;
     border-bottom: none;
 }
@@ -53,6 +69,7 @@ table {
 .ttt-field {
     display: flex;
     align-items: flex-end;
+    cursor: default;
 }
 
 .ttt-sidebar {

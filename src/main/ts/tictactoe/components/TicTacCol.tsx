@@ -21,7 +21,8 @@ class TicTacCol extends React.Component<TicTacColProps,
             isPlayed: false,
             playedBy: null,
             board: this.props.board,
-            gameOver: false
+            gameOver: false,
+            celementStyle: 'ttt-celement-unplayed'
         };
         this.space = React.createRef();
         this.playSpace = this.playSpace.bind(this);
@@ -30,16 +31,24 @@ class TicTacCol extends React.Component<TicTacColProps,
     componentDidUpdate() {
         const empty = '---------'
 
+        // reset
         if (this.props.board === empty && this.state.board !== empty) {
             this.setState({ isPlayed: false,
                 playedBy: null,
                 board: empty,
-                gameOver: false
+                gameOver: false,
+                celementStyle: 'ttt-celement-unplayed'
             });
-            this.space.current.innerText = '';
-            this.space.current.className = 'ttt-celement';
+            this.space.current.innerText = '';  // I actually think I'm going
+                                   // pull this one out and use the state,
+                                   // will that enable me to get rid of the ref
+                                   // entirely? I think I solved the problem the
+                                   // ref was trying to solve by adding the board
+                                   // prop which force-updated each of these components
+        // update board state
         } else if (this.state.board != this.props.board) {
             this.setState({ board: this.props.board });
+        // determine coloration on win
         } else if (this.props.isLocked() && this.state.gameOver === false) {
             this.setState({ gameOver: true });
             
@@ -48,7 +57,9 @@ class TicTacCol extends React.Component<TicTacColProps,
                         this.state.playedBy, this.space.current.id);
 
                 if (contributor) {
-                    this.space.current.className = 'ttt-winner';
+                    this.setState({ celementStyle: 'ttt-winner' });
+                } else {
+                    this.setState({ celementStyle: 'ttt-celement-played' })
                 }
             } catch (error: unknown) {
                 console.error(error);
@@ -72,7 +83,8 @@ class TicTacCol extends React.Component<TicTacColProps,
             this.space.current.innerText = this.props.currentTurn;
             this.setState({
                 isPlayed: true,
-                playedBy: this.props.currentTurn
+                playedBy: this.props.currentTurn,
+                celementStyle: 'ttt-celement-played'
             });
             this.props.changeTurn(this.space.current.id);
         }
@@ -80,7 +92,7 @@ class TicTacCol extends React.Component<TicTacColProps,
 
     render() {
         return (
-            <td className="ttt-celement"
+            <td className={this.state.celementStyle}
                 id={this.props.id}
                 ref={this.space}
                 onClick={this.playSpace}>
