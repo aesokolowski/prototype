@@ -1,7 +1,7 @@
 const { expect } = require('chai');
 const chai = require('chai');
 const assertType = require('chai-asserttype');
-const { xWinConditions, oWinConditions } = require('./test_files/test_tttStructs');
+const { xWinConditions, oWinConditions, fullBoard } = require('./test_files/test_tttStructs');
 
 const simpleTestPatterns = [
         '---------', 'XXX-O--O-', '-XX-XOO--', 'OX--OXXXO'
@@ -125,6 +125,36 @@ describe('xWinCondtions and oWinConditions:', () => {
                         expect(xResult).to.equal(false);
                         expect(oResult).to.equal(false);
                     }
+                }
+            }
+        });
+    });
+});
+
+describe('fullBoard:', () => {
+    describe('what is it?:', () => {
+        const patterns = [
+                                      // 1 too many characters
+            'XOXOXOXOX', '---------', 'XOXOXOXOXO',
+            // 1 too few // back to len 9
+            'XOXOXOXO', 'XOX-OXOXO', '---X-----',
+                                      // impossible config that should pass
+            'XOXO-XOXO', 'O-XXOO-XO', 'XXXOOOXXX'
+        ];
+        it('is an object', () => {
+            expect(typeof fullBoard).to.equal('object');
+        });
+        it('matches an expected string representation', () => {
+            expect(fullBoard.toString()).to.equal('/^[OX]{9}$/');
+        });
+        it('passes 9 random tests', () => {
+            for (let i = 0; i < patterns.length; i++) {
+                const pattern = patterns[i];
+
+                if (i === 0 || i === 8) {
+                    expect(fullBoard.test(pattern)).to.equal(true);
+                } else {
+                    expect (fullBoard.test(pattern)).to.equal(false);
                 }
             }
         });

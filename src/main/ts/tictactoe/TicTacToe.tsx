@@ -7,7 +7,7 @@ import TicTacRow from './components/TicTacRow';
 import { Modes, TicTacToeProps, TicTacToeState } from '../struct/tttTypes'
 
 import { idToBoardIndex } from '../code/tttHelpers';
-import { xWinConditions, oWinConditions } from '../struct/tttStructs';
+import { xWinConditions, oWinConditions, fullBoard } from '../struct/tttStructs';
 
 // This component holds state which affects the whole board --
 // the grandchild component TicTacCol holds state that only concerns
@@ -15,6 +15,7 @@ import { xWinConditions, oWinConditions } from '../struct/tttStructs';
 
 const TURN_MSG = '\'s turn.',
       WIN_MSG = ' Wins!',
+      TIE_MSG = 'Tie Game!',
       ERR_MSG = 'Internal error. Try again, or try reloading the page.';
 
 class TicTacToe extends React.Component<TicTacToeProps,
@@ -37,6 +38,10 @@ class TicTacToe extends React.Component<TicTacToeProps,
     }
 
     componentDidUpdate(prevProps: TicTacToeProps, prevState: TicTacToeState) {
+        if (this.isFull() && this.state.turnMessage !== TIE_MSG) {
+            this.setState({ turnMessage: TIE_MSG });
+        }
+
         if (!this.state.locked) {
             this.runCheck();
         }
@@ -101,6 +106,10 @@ class TicTacToe extends React.Component<TicTacToeProps,
                 locked: true
             });
         }
+    }
+
+    isFull() {
+        return fullBoard.test(this.state.board);
     }
 
     isLocked() {

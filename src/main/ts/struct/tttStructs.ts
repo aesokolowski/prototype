@@ -24,4 +24,6 @@ const oWinConditions = [
     /^[OX-]{2}O[OX-]O[OX-]O[OX-]{2}$/
 ];
 
-export { xWinConditions, oWinConditions };
+const fullBoard = /^[OX]{9}$/;
+
+export { xWinConditions, oWinConditions, fullBoard };

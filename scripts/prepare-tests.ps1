@@ -32,12 +32,14 @@ $struct = Get-ChildItem $struct_dir -Name -Filter *.ts
 $test_list = @()
 
 foreach($file in $struct) {
-    $newName = "test_" + $file
-    $from = $struct_dir + $file
-    $to = $test_files_dir + $newName
+    if (-not ($file -Like '*Types.ts')) {  # ignore Type files for now
+        $newName = "test_" + $file
+        $from = $struct_dir + $file
+        $to = $test_files_dir + $newName
 
-    Copy-Item -Path $from -Destination $to
-    $test_list += $to
+        Copy-Item -Path $from -Destination $to
+        $test_list += $to
+    }
 }
 
 Write-Output "modifying exports for each file..."
