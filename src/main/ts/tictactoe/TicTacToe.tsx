@@ -28,6 +28,7 @@ class TicTacToe extends React.Component<TicTacToeProps,
             turnMessage: 'X' + TURN_MSG,
             errorMessage: '',
             board: '---------',
+            mode: '2-player',
             locked: false,
             resetButtonStyle: 'ttt-reset-locked'
         };
@@ -38,12 +39,16 @@ class TicTacToe extends React.Component<TicTacToeProps,
     }
 
     componentDidUpdate(prevProps: TicTacToeProps, prevState: TicTacToeState) {
-        if (this.isFull() && this.state.turnMessage !== TIE_MSG) {
-            this.setState({ turnMessage: TIE_MSG });
-        }
+        if (this.state.mode !== prevState.mode) {
+            this.resetBoard();
+        } else { // TODO: make contents separate method
+            if (this.isFull() && this.state.turnMessage !== TIE_MSG) {
+                this.setState({ turnMessage: TIE_MSG });
+            }
 
-        if (!this.state.locked) {
-            this.runCheck();
+            if (!this.state.locked) {
+                this.runCheck();
+            }
         }
 
         this.toggleResetButtonStyle();
@@ -127,7 +132,7 @@ class TicTacToe extends React.Component<TicTacToeProps,
     }
 
     modeChanged(mode: Modes) {
-        console.log('detected mode change:', mode);
+        this.setState({ mode });
     }
 
     toggleResetButtonStyle() {
@@ -146,8 +151,8 @@ class TicTacToe extends React.Component<TicTacToeProps,
                 <div className="ttt-field">
                     <table>
                         <tbody>{
-                            this.props.ids.map((idRow, idx) => (
-                                <TicTacRow
+                            this.props.ids.map(
+                                (idRow, idx) => <TicTacRow
                                     key={idx}
                                     idRow={idRow}
                                     board={this.state.board}
@@ -155,14 +160,12 @@ class TicTacToe extends React.Component<TicTacToeProps,
                                     changeTurn={this.changeTurn}
                                     isLocked={this.isLocked}
                                 />
-                            ))
+                            )
                         }</tbody>
                     </table>
                     <aside className="ttt-sidebar">
                         <ModeSelect modeChanged={this.modeChanged} />
-                        <ResetButton
-                            buttonStyle={this.state.resetButtonStyle}
-                            resetBoard={this.resetBoard}
+                        <ResetButton buttonStyle={this.state.resetButtonStyle} resetBoard={this.resetBoard}
                         />
                     </aside>
                 </div>

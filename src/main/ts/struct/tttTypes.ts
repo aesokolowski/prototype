@@ -13,6 +13,7 @@ type TicTacToeState = {
     //  any board gets run through a gamut of tested regexes at least once
     //  and should throw an exception if non-conforming
     board: string,
+    mode: Modes,
     errorMessage: string,
     locked: boolean,
     resetButtonStyle: resetButtonStyles
