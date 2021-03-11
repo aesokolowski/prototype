@@ -87,14 +87,14 @@ table {
 }
 
 .ttt-mode-button-active, .ttt-mode-button-inactive {
-    margin-bottom: 4px;
+    margin-bottom: 6px;
 }
 
 .ttt-reset-locked#reset-button, .ttt-reset-unlocked#reset-button,
         .ttt-mode-button-active, .ttt-mode-button-inactive {
-    border-radius: 7px;
+    border-radius: 14px;
     font-size: 1.25em;
-    padding: 7px 14px;
+    padding: 4px 14px;
 }
 
 .ttt-reset-locked#reset-button, .ttt-reset-unlocked#reset-button, .ttt-mode-button-inactive {
