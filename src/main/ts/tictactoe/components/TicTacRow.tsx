@@ -9,15 +9,14 @@ import TicTacCol from './TicTacCol';
 const TicTacRow: React.FunctionComponent<TicTacRowProps> =
         ({ children, idRow, board, currentTurn, changeTurn, isLocked }) => (
     <tr>{
-        idRow.map((id, idx) => (
-            <TicTacCol key={idx}
-                id={id}
-                board={board}
-                currentTurn={currentTurn}
-                changeTurn={changeTurn}
-                isLocked={isLocked}
-            />
-        ))
+        idRow.map((id, idx) => <TicTacCol
+            key={idx}
+            id={id}
+            board={board}
+            currentTurn={currentTurn}
+            changeTurn={changeTurn}
+            isLocked={isLocked}
+        />)
     }</tr>
 );
 

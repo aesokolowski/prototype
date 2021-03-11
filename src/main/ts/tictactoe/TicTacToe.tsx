@@ -18,8 +18,7 @@ const TURN_MSG = '\'s turn.',
       TIE_MSG = 'Tie Game!',
       ERR_MSG = 'Internal error. Try again, or try reloading the page.';
 
-class TicTacToe extends React.Component<TicTacToeProps,
-        TicTacToeState> {
+class TicTacToe extends React.Component<TicTacToeProps, TicTacToeState> {
     constructor(props: TicTacToeProps) {
         super(props);
 
@@ -41,7 +40,7 @@ class TicTacToe extends React.Component<TicTacToeProps,
     componentDidUpdate(prevProps: TicTacToeProps, prevState: TicTacToeState) {
         if (this.state.mode !== prevState.mode) {
             this.resetBoard();
-        } else { // TODO: make contents separate method
+        } else { // TODO: kick out contents to separate method
             if (this.isFull() && this.state.turnMessage !== TIE_MSG) {
                 this.setState({ turnMessage: TIE_MSG });
             }
@@ -117,6 +116,8 @@ class TicTacToe extends React.Component<TicTacToeProps,
         return fullBoard.test(this.state.board);
     }
 
+    // can probably replace with sending this.state.locked as a prop, I believe this was a hack around an issue that
+    // no longer exists
     isLocked() {
         return this.state.locked;
     }

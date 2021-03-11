@@ -87,7 +87,7 @@ table {
 }
 
 .ttt-mode-button-active, .ttt-mode-button-inactive {
-    margin-top: 4px;
+    margin-bottom: 4px;
 }
 
 .ttt-reset-locked#reset-button, .ttt-reset-unlocked#reset-button,

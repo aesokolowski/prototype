@@ -1,10 +1,6 @@
 import React from 'react';
 
-import {
-    Modes,
-    ModeSelectProps,
-    ModeSelectState
-} from '../../struct/tttTypes';
+import { Modes, ModeSelectProps, ModeSelectState } from '../../struct/tttTypes';
 
 import ModeSelectButton from './ModeSelectButton';
 
@@ -18,25 +14,16 @@ class ModeSelect extends React.Component<ModeSelectProps, ModeSelectState> {
         this.modeClicked = this.modeClicked.bind(this);
     }
 
-    componentDidUpdate(prevProps: ModeSelectProps, prevState: ModeSelectState) {
-
-        // DEBUG
-        console.log('this.state:');
-        console.dir(this.state);
-        console.log('prevState:');
-        console.dir(prevState);
-        // END DEBUG
-    }
-
     modeClicked(e: React.MouseEvent<HTMLDivElement, MouseEvent>) {
         e.preventDefault();
         e.stopPropagation();
 
         const target = e.target as HTMLDivElement;
+        const id = target.id;
 
-        if (target.id !== this.state.mode) {
-            this.setState({ mode: target.id as Modes });
-            this.props.modeChanged(target.id);
+        if (id !== this.state.mode) {
+            this.setState({ mode: id as Modes });
+            this.props.modeChanged(id);
         }
     }
 
