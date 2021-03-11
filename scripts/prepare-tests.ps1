@@ -27,6 +27,8 @@ if ($a0 -ieq "--clean" -or $a0 -ieq "-c") {
     Write-Output "cleaning skipped: use with --clean to clear test directories"
 }
 
+##
+
 Write-Output "copying main files to test directory..."
 $struct = Get-ChildItem $struct_dir -Name -Filter *.ts
 $test_list = @()
