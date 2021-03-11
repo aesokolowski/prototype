@@ -80,7 +80,7 @@ class TicTacCol extends React.Component<TicTacColProps,
         // only permit a space to be played if the game isn't over
         // or the space hasn't previously been played 
         if (!(this.props.isLocked() || this.state.isPlayed)) {
-            this.space.current.innerText = this.props.currentTurn;
+            this.space.current.innerText = this.props.currentTurn;  // change this!
             this.setState({
                 isPlayed: true,
                 playedBy: this.props.currentTurn,

@@ -89,14 +89,17 @@ table {
 
 .ttt-reset-locked#reset-button, .ttt-reset-unlocked#reset-button {
     background-color: #333333;
+    border-radius: 7px;
     font-size: 1.25em;
     padding: 7px 14px;
 }
 
 .ttt-reset-locked#reset-button {
     color: #BBBBBB;
+    cursor: default;
 }
 
 .ttt-reset-unlocked#reset-button {
     color: #2cb7cf;
+    cursor: pointer;
 }
