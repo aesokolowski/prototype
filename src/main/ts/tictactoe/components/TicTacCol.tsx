@@ -4,8 +4,7 @@ import { didIContribute } from '../../code/tttHelpers';
 
 import { TicTacColProps, TicTacColState } from '../../struct/tttTypes';
 
-class TicTacCol extends React.Component<TicTacColProps,
-        TicTacColState> {
+class TicTacCol extends React.Component<TicTacColProps, TicTacColState> {
     constructor(props: TicTacColProps) {
         super(props);
 

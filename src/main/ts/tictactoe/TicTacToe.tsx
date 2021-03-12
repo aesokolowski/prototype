@@ -1,10 +1,11 @@
+import axios from 'axios';
 import React from 'react';
 
 import ModeSelect from './components/ModeSelect';
 import ResetButton from './components/ResetButton';
 import TicTacRow from './components/TicTacRow';
 
-import { Modes, TicTacToeProps, TicTacToeState } from '../struct/tttTypes'
+import { Modes, TicTacToeProps, TicTacToeState, BoardReducer } from '../struct/tttTypes'
 
 import { idToBoardIndex } from '../code/tttHelpers';
 import { xWinConditions, oWinConditions, fullBoard } from '../struct/tttStructs';
@@ -24,11 +25,14 @@ class TicTacToe extends React.Component<TicTacToeProps, TicTacToeState> {
 
         this.state = {
             currentTurn: 'X',
+            whoIsComputer: null,
+            isComputerTurn: false,
             turnMessage: 'X' + TURN_MSG,
             errorMessage: '',
             board: '---------',
             mode: '2-player',
             locked: false,
+            counter: 0,
             resetButtonStyle: 'ttt-reset-locked'
         };
         this.changeTurn = this.changeTurn.bind(this);
@@ -37,17 +41,38 @@ class TicTacToe extends React.Component<TicTacToeProps, TicTacToeState> {
         this.modeChanged = this.modeChanged.bind(this);
     }
 
-    componentDidUpdate(prevProps: TicTacToeProps, prevState: TicTacToeState) {
+     async componentDidUpdate(prevProps: TicTacToeProps, prevState: TicTacToeState) {
+        console.log('this.state.counter:', this.state.counter);
+
+        //  react to mode change
         if (this.state.mode !== prevState.mode) {
             this.resetBoard();
-        } else { // TODO: kick out contents to separate method
-            if (this.isFull() && this.state.turnMessage !== TIE_MSG) {
-                this.setState({ turnMessage: TIE_MSG });
+            if (this.state.mode !== '2-player') {
+                this.setState({
+                    whoIsComputer: 'O'
+                });
+            } else {
+                this.setState({ whoIsComputer: null });
             }
+        //  check if anyone won
+        } else if (!this.state.locked) {
+            this.runCheck();
+        //  check if full
+        } else if (this.isFull() && this.state.turnMessage !== TIE_MSG) {
+            this.setState({ turnMessage: TIE_MSG });
+        }
 
-            if (!this.state.locked) {
-                this.runCheck();
-            }
+        // probably will split this log out similar to toggle reset
+        // button style method
+        if (!this.state.isComputerTurn && this.state.currentTurn === this.state.whoIsComputer) {
+            this.setState({ isComputerTurn: true, locked: true, turnMessage: 'Computer' + TURN_MSG });
+        } else if(this.state.isComputerTurn && !prevState.isComputerTurn) {
+            // and definitely split this out so this method doesn't have to itself be async,
+            // just maybe call other async stuff -- with so much manipulation of props and
+            // state it's not like I need to pass a bunch of stuff around
+            const response = await axios.post('/api/tictactoe/easy', { board: this.state.board });
+
+            console.log(response);
         }
 
         this.toggleResetButtonStyle();
@@ -56,28 +81,57 @@ class TicTacToe extends React.Component<TicTacToeProps, TicTacToeState> {
     changeTurn(id: string) {
         try {
             const boardIndex = idToBoardIndex(id);
-            const callback = (acc: string, ch: string, idx: number) =>
-                    acc + (idx === boardIndex ? this.state.currentTurn : ch);
+            const callback: BoardReducer = (acc, ch, idx) => acc + (idx === boardIndex ? this.state.currentTurn : ch);
 
-            if (this.state.currentTurn == 'X') {
-                this.setState({
-                    currentTurn: 'O',
-                    turnMessage: 'O' + TURN_MSG,
-                    errorMessage: '',
-                    board: this.state.board.split('').reduce(callback, '')
-                });
-            } else {
-                    this.setState({
-                    currentTurn: 'X',
-                    turnMessage: 'X' + TURN_MSG,
-                    errorMessage: '',
-                    board: this.state.board.split('').reduce(callback, '')
-                });
+            // not sure I really need this... twoPlayerRoutine for all... if it works out,
+            // then move its logic back in, if not, then write onePlayerRoutine or something
+            switch(this.state.mode) {
+                case '2-player':
+                    this.twoPlayerRoutine(callback);
+                    break;
+                case 'Easy':
+                    this.twoPlayerRoutine(callback);
+                    break;
+                case 'Hard':
+                    this.twoPlayerRoutine(callback);
+                    break;
+                default:
+                    throw Error('Invalid state "' + this.state.mode + '" @TicTacToe::changeTurn');
             }
         } catch (error: unknown) {
             console.error(error);
             this.setState({ errorMessage: ERR_MSG });
         }
+    }
+
+    twoPlayerRoutine(callback: BoardReducer) {
+        if (this.state.currentTurn == 'X') {
+            this.setState({
+                currentTurn: 'O',
+                turnMessage: 'O' + TURN_MSG,
+                errorMessage: '',
+                board: this.state.board.split('').reduce(callback, ''),
+                counter: this.state.counter + 1
+            });
+        } else {
+            this.setState({
+                currentTurn: 'X',
+                turnMessage: 'X' + TURN_MSG,
+                errorMessage: '',
+                board: this.state.board.split('').reduce(callback, ''),
+                counter: this.state.counter + 1
+            });
+        }
+    }
+
+    //  on pause, trying another route
+    easyRoutine(callback: (acc: string, ch: string, idx: number) => string) {
+        if (this.state.currentTurn == 'X') {
+        }
+    }
+
+    hardRoutine(callback) {
+        alert('Hard mode!');
     }
 
     checkForWin(conditions: RegExp[]) {
@@ -128,7 +182,8 @@ class TicTacToe extends React.Component<TicTacToeProps, TicTacToeState> {
             turnMessage: 'X' + TURN_MSG,
             errorMessage: '',
             board: '---------',
-            locked: false
+            locked: false,
+            counter: 0
         });
     }
 

@@ -10,7 +10,7 @@ class ModeSelect extends React.Component<ModeSelectProps, ModeSelectState> {
     constructor(props: ModeSelectProps) {
         super(props);
 
-        this.state = { mode: '2-player', counter: 0 };
+        this.state = { mode: '2-player' };
         this.modeClicked = this.modeClicked.bind(this);
     }
 

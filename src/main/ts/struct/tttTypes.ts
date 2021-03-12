@@ -8,6 +8,8 @@ type celementStyles = 'ttt-celement-unplayed'| 'ttt-celement-played' | 'ttt-winn
 type TicTacToeProps = { ids: string[][] };
 type TicTacToeState = {
     currentTurn: xOrO,
+    whoIsComputer: xOrO,
+    isComputerTurn: boolean,
     turnMessage: string,
     // No way I'm going to bother enumerating possible board states, any board gets run through a gamut of tested
     // regexes at least once and should throw an exception if non-conforming
@@ -15,8 +17,10 @@ type TicTacToeState = {
     mode: Modes,
     errorMessage: string,
     locked: boolean,
+    counter: number,
     resetButtonStyle: resetButtonStyles
 };
+type BoardReducer = (acc: string, ch: string, idx: number) => string;
 
 //  TicTacRow.tsx
 type TicTacRowProps = {
@@ -48,7 +52,7 @@ type ResetButtonProps = { buttonStyle: resetButtonStyles, resetBoard: () => void
 
 // ModeSelect
 type ModeSelectProps = { modeChanged: (modes) => void };
-type ModeSelectState = { mode: Modes, counter: number };
+type ModeSelectState = { mode: Modes };
 
 //  ModeSelectButton
 type ModeSelectButtonProps = {
@@ -61,4 +65,4 @@ type ModeSelectButtonProps = {
 // I get around to tweaking a script to accomodate multi-line export
 // statements... which shouldn't be too hard but enough side tracking for
 // now, brass tacks only 2021-08-03
-export { xOrO, Modes, TicTacToeProps, TicTacToeState, TicTacRowProps, TicTacColProps, TicTacColState, ResetButtonProps, ModeSelectProps, ModeSelectState, ModeSelectButtonProps };
+export { xOrO, Modes, TicTacToeProps, TicTacToeState, BoardReducer, TicTacRowProps, TicTacColProps, TicTacColState, ResetButtonProps, ModeSelectProps, ModeSelectState, ModeSelectButtonProps };
