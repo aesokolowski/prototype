@@ -18,7 +18,10 @@ public class TicTacToeController {
 
     @PostMapping(path = "/api/tictactoe/easy")
     public ResponseEntity<Object> easyComputerTurn(@RequestBody TicTacToeBoard board) {
+        log.info("Hello?");
+
         String newBoard = ticTacToeService.easyComputerTurn(board.getBoard());
+
         TicTacToeBoard newTttBoard = new TicTacToeBoard(newBoard);
 
         log.info(board.getBoard());
