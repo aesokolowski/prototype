@@ -70,7 +70,7 @@ class TicTacToe extends React.Component<TicTacToeProps, TicTacToeState> {
             // and definitely split this out so this method doesn't have to itself be async,
             // just maybe call other async stuff -- with so much manipulation of props and
             // state it's not like I need to pass a bunch of stuff around
-            const response = await axios.post('/api/tictactoe/easy', { board: this.state.board });
+            const response = await axios.post('/api/tictactoe/easy', { board: this.state.board, playAs: this.state.whoIsComputer });
 
             console.log(response);
         }

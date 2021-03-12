@@ -9,16 +9,19 @@ public class TicTacToeServiceImpl implements TicTacToeService {
     private static Random generateRandom = new Random(System.currentTimeMillis());
 
     @Override
-    public String easyComputerTurn(String board) {
+    public String easyComputerTurn(String board, Character playAs) {
         System.out.println("hello service");
+        Character notPlayAs = playAs == 'X' ? 'O' : 'X';
         StringBuilder newBoard = new StringBuilder(board);
         boolean invalid = true;
 
         do {
             int mutateAt = generateRandom.nextInt(9);
 
-            if (!(board.charAt(mutateAt) == 'O' && board.charAt(mutateAt) == 'X')) {
-                newBoard.setCharAt(mutateAt, 'O');
+            System.out.println(playAs + " " + notPlayAs);
+
+            if (!(board.charAt(mutateAt) == playAs || board.charAt(mutateAt) == notPlayAs)) {
+                newBoard.setCharAt(mutateAt, playAs);
                 invalid = false;
             }
         } while (invalid);

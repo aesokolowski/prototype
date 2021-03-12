@@ -20,7 +20,7 @@ public class TicTacToeController {
     public ResponseEntity<Object> easyComputerTurn(@RequestBody TicTacToeBoard board) {
         log.info("Hello?");
 
-        String newBoard = ticTacToeService.easyComputerTurn(board.getBoard());
+        String newBoard = ticTacToeService.easyComputerTurn(board.getBoard(), board.getPlayAs());
 
         TicTacToeBoard newTttBoard = new TicTacToeBoard(newBoard);
 
