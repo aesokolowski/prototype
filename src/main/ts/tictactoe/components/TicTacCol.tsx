@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { didIContribute } from '../../code/tttHelpers';
+import { didIContribute, idToBoardIndex, findBoardDelta } from '../../code/tttHelpers';
 
 import { TicTacColProps, TicTacColState } from '../../struct/tttTypes';
 
@@ -23,22 +23,45 @@ class TicTacCol extends React.Component<TicTacColProps, TicTacColState> {
     // honestly I kind of prefer to keep props and state alone so I don't
     // confuse assignment with referencing, so this might be an exception
     // to my normal rule
-    componentDidUpdate() {
+    componentDidUpdate(prevProps: TicTacColProps) {
         const empty = '---------'
+
+        // detect computer move and respond to it
+        if (this.props.computerJustMadeMove && !prevProps.computerJustMadeMove) {
+            const boardIndex = idToBoardIndex(this.props.id);
+
+            // DEBUG: need to detect how the two boards are different
+
+            //this.props.changeTurn(this.props.id);
+        }
 
         // reset
         if (this.props.board === empty && this.state.board !== empty) {
-            this.setState({ isPlayed: false,
+            this.setState({
+                isPlayed: false,
                 playedBy: null,
                 board: empty,
                 gameOver: false,
                 celementStyle: 'ttt-celement-unplayed'
             });
-
         // update board state
         } else if (this.state.board != this.props.board) {
             this.setState({ board: this.props.board });
-        // determine coloration on win
+
+            if (this.props.computerJustMadeMove && !prevProps.computerJustMadeMove) {
+                const boardIndex = idToBoardIndex(this.props.id);
+                const deltaIndex = findBoardDelta(this.props.board, prevProps.board);
+
+                if (boardIndex === deltaIndex) {
+                    this.setState({
+                        isPlayed: true,
+                        playedBy: this.props.currentTurn,
+                        celementStyle: 'ttt-celement-played'
+                    });
+                    this.props.changeTurn(this.props.id);
+                }
+            
+            }   // determine coloration on win
         } else if (this.props.isLocked() && this.state.gameOver === false) {
             this.setState({ gameOver: true });
             
@@ -80,12 +103,10 @@ class TicTacCol extends React.Component<TicTacColProps, TicTacColState> {
         }
     }
 
+
     render() {
         return (
-            <td className={this.state.celementStyle}
-                id={this.props.id}
-                onClick={this.playSpace}
-            >
+            <td className={this.state.celementStyle} id={this.props.id} onClick={this.playSpace}>
                 {this.state.playedBy}
             </td>
         );

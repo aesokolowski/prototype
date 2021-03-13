@@ -229,4 +229,14 @@ const fowardSlash = (board: string, playedBy: 'X' | 'O') => {
     return false;
 };
 
-export { generateIds, idToBoardIndex, didIContribute };
+const findBoardDelta = (board1: string, board2: string) => {
+    let index = 0;
+
+    while (board1.charAt(index) == board2.charAt(index)) {
+        index++;
+    }
+
+    return index;
+};
+
+export { generateIds, idToBoardIndex, didIContribute, findBoardDelta };

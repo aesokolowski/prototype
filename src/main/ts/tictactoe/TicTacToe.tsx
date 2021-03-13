@@ -5,7 +5,7 @@ import ModeSelect from './components/ModeSelect';
 import ResetButton from './components/ResetButton';
 import TicTacRow from './components/TicTacRow';
 
-import { Modes, TicTacToeProps, TicTacToeState, BoardReducer } from '../struct/tttTypes'
+import { Modes, ResponseData, TicTacToeProps, TicTacToeState, BoardReducer } from '../struct/tttTypes'
 
 import { idToBoardIndex } from '../code/tttHelpers';
 import { xWinConditions, oWinConditions, fullBoard } from '../struct/tttStructs';
@@ -15,6 +15,7 @@ import { xWinConditions, oWinConditions, fullBoard } from '../struct/tttStructs'
 // any individual cell
 
 const TURN_MSG = '\'s turn.',
+      YOUR_TURN_MSG = 'Your Turn',
       WIN_MSG = ' Wins!',
       TIE_MSG = 'Tie Game!',
       ERR_MSG = 'Internal error. Try again, or try reloading the page.';
@@ -27,6 +28,7 @@ class TicTacToe extends React.Component<TicTacToeProps, TicTacToeState> {
             currentTurn: 'X',
             whoIsComputer: null,
             isComputerTurn: false,
+            computerJustMadeMove: false,
             turnMessage: 'X' + TURN_MSG,
             errorMessage: '',
             board: '---------',
@@ -42,14 +44,22 @@ class TicTacToe extends React.Component<TicTacToeProps, TicTacToeState> {
     }
 
      async componentDidUpdate(prevProps: TicTacToeProps, prevState: TicTacToeState) {
+        //  the counter is incremented too often: TODO when refresh button is pressed for completed game (won or tie)
+        //  then increment counter, set back to zero on mode change
         console.log('this.state.counter:', this.state.counter);
+
+        console.log('this.state:');
+        console.dir(this.state);
+        console.log('prevState');
+        console.dir(prevState);
 
         //  react to mode change
         if (this.state.mode !== prevState.mode) {
             this.resetBoard();
             if (this.state.mode !== '2-player') {
                 this.setState({
-                    whoIsComputer: 'O'
+                    whoIsComputer: 'O',
+                    turnMessage: YOUR_TURN_MSG
                 });
             } else {
                 this.setState({ whoIsComputer: null });
@@ -71,8 +81,9 @@ class TicTacToe extends React.Component<TicTacToeProps, TicTacToeState> {
             // just maybe call other async stuff -- with so much manipulation of props and
             // state it's not like I need to pass a bunch of stuff around
             const response = await axios.post('/api/tictactoe/easy', { board: this.state.board, playAs: this.state.whoIsComputer });
+            const data: ResponseData = response.data;
 
-            console.log(response);
+            this.setState({ board: data.board, isComputerTurn: false, computerJustMadeMove: true });
         }
 
         this.toggleResetButtonStyle();
@@ -107,17 +118,21 @@ class TicTacToe extends React.Component<TicTacToeProps, TicTacToeState> {
     twoPlayerRoutine(callback: BoardReducer) {
         if (this.state.currentTurn == 'X') {
             this.setState({
+                computerJustMadeMove: false,
                 currentTurn: 'O',
-                turnMessage: 'O' + TURN_MSG,
+                turnMessage: 'O' + TURN_MSG, // needs to be conditional for computer mode
                 errorMessage: '',
+                locked: false,     // might make a separate onePlayer route actually, if this causes issues
                 board: this.state.board.split('').reduce(callback, ''),
                 counter: this.state.counter + 1
             });
         } else {
             this.setState({
+                computerJustMadeMove: false,
                 currentTurn: 'X',
-                turnMessage: 'X' + TURN_MSG,
+                turnMessage: 'X' + TURN_MSG, // needs to be conditional for computer mode
                 errorMessage: '',
+                locked: false,
                 board: this.state.board.split('').reduce(callback, ''),
                 counter: this.state.counter + 1
             });
@@ -179,6 +194,8 @@ class TicTacToe extends React.Component<TicTacToeProps, TicTacToeState> {
     resetBoard() {
         this.setState({
             currentTurn: 'X',
+            // whoIsComputer: needed when swapping between X and O is implemented
+            computerJustMadeMove: false,
             turnMessage: 'X' + TURN_MSG,
             errorMessage: '',
             board: '---------',
@@ -212,6 +229,7 @@ class TicTacToe extends React.Component<TicTacToeProps, TicTacToeState> {
                                     key={idx}
                                     idRow={idRow}
                                     board={this.state.board}
+                                    computerJustMadeMove={this.state.computerJustMadeMove}
                                     currentTurn={this.state.currentTurn}
                                     changeTurn={this.changeTurn}
                                     isLocked={this.isLocked}

@@ -10,15 +10,12 @@ public class TicTacToeServiceImpl implements TicTacToeService {
 
     @Override
     public String easyComputerTurn(String board, Character playAs) {
-        System.out.println("hello service");
         Character notPlayAs = playAs == 'X' ? 'O' : 'X';
         StringBuilder newBoard = new StringBuilder(board);
         boolean invalid = true;
 
         do {
             int mutateAt = generateRandom.nextInt(9);
-
-            System.out.println(playAs + " " + notPlayAs);
 
             if (!(board.charAt(mutateAt) == playAs || board.charAt(mutateAt) == notPlayAs)) {
                 newBoard.setCharAt(mutateAt, playAs);

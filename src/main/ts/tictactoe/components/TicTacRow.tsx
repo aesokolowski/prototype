@@ -7,12 +7,13 @@ import TicTacCol from './TicTacCol';
 //  This component is functional because it's merely mapping the table row
 //  to columns and fowarding its props to the actual cells
 const TicTacRow: React.FunctionComponent<TicTacRowProps> =
-        ({ children, idRow, board, currentTurn, changeTurn, isLocked }) => (
+        ({ children, idRow, board, computerJustMadeMove, currentTurn, changeTurn, isLocked }) => (
     <tr>{
         idRow.map((id, idx) => <TicTacCol
             key={idx}
             id={id}
             board={board}
+            computerJustMadeMove={computerJustMadeMove}
             currentTurn={currentTurn}
             changeTurn={changeTurn}
             isLocked={isLocked}
